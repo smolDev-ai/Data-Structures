@@ -79,15 +79,11 @@ class LRUCache:
     def set(self, key, value):
          # if key in cache, update it, and make it MRU
         if key in self.cache.keys():
-            # I changed this, you didn't have the .value so it was just setting the value of the cache at that key to be the array, instead of just changing
-            # the ListNode.value
             self.cache[key].value = [key, value]
             self.doublelist.move_to_front(self.cache[key])
-            # just added a return
             return self.cache[key]
 
         else:
-            # after moving this outside of the if statement, it's identical to what I have
             self.cache[key] = self.doublelist.add_to_head([key, value])
 
             # if current_size exceeds limit delete LRU
@@ -95,5 +91,5 @@ class LRUCache:
                 old = self.doublelist.remove_from_tail()
                 del self.cache[old[0]]
       
-        return self.cache[key]
+            return self.cache[key]
 
