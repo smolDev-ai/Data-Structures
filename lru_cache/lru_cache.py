@@ -48,7 +48,6 @@ class LRUCache:
     """
     def __init__(self, limit=10):
         self.limit = limit
-        self.current_size = 0
         self.doublelist = DoublyLinkedList()
         self.cache = {}
 
@@ -62,7 +61,7 @@ class LRUCache:
     def get(self, key):
         if key in self.cache.keys():
             self.doublelist.move_to_front(self.cache[key])
-            return self.cache[key]
+            return self.cache[key].value[1]
         else:
             return None
 
@@ -87,7 +86,7 @@ class LRUCache:
             self.cache[key] = self.doublelist.add_to_head([key, value])
 
             # if current_size exceeds limit delete LRU
-            if self.current_size > self.limit:
+            if self.doublelist.length > self.limit:
                 old = self.doublelist.remove_from_tail()
                 del self.cache[old[0]]
       
