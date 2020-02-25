@@ -62,7 +62,7 @@ class LRUCache:
     def get(self, key):
         if key in self.cache.keys():
             self.doublelist.move_to_front(self.cache[key])
-            return self.cache[key].value[1]
+            return self.cache[key]
         else:
             return None
 
