@@ -22,7 +22,11 @@ class LRUCache:
     key-value pair doesn't exist in the cache.
     """
     def get(self, key):
-
+        if key in self.cache.keys():
+            self.doublelist.move_to_front(self.cache[key])
+            return self.cache.value[key]
+        else:
+            return None
 
 
     """
@@ -36,4 +40,15 @@ class LRUCache:
     the newly-specified value.
     """
     def set(self, key, value):
+        # if key in cache, update it, and make it MRU
+        if key in self.cache:
+            self.cache[key].value = {key: value}
+            self.doublelist.move_to_front(self.cache[key])
+        else:
+            # if current_size exceeds limit delete LRU
+            if self.current_size > self.limit:
+                old = self.doublelist.remove_from_tail()
+                for key in old:
+                    del self.cache[key]
+            self.doublelist.add_to_head({key: value})
 
