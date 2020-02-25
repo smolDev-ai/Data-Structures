@@ -61,7 +61,7 @@ class DoublyLinkedList:
             # We know that the list is populated
             self.head.insert_before(value)
             self.head = self.head.prev
-        return self.head
+        return self.head.value
 
 
     """Removes the List's current head node, making the
@@ -84,7 +84,7 @@ class DoublyLinkedList:
             # We know that the list is populated
             self.tail.insert_after(value)
             self.tail = self.tail.next
-        return self.tail
+        return self.tail.value
 
     """Removes the List's current tail node, making the 
     current tail's previous node the new tail of the List.

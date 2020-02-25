@@ -1,5 +1,43 @@
 from doubly_linked_list import DoublyLinkedList
 
+"""
+Terminology
+Cache Hit: When the data you want is in the cache
+Cache Miss: When you gave to go to primary storage to get the data
+LRU Cache (Least Recently Used)
+Cache has a limited size
+LRU Cache discards the least recently used item in teh cache, when the cache is full
+Sructs needed:
+Hash Table: Need to be able to look something up with a key. Hash table will allow us to quickly look up cache
+            entries by key
+Doubly Linked List: Need to organize our data in least and most recently used data.
+    - The DLL makes it easy to move data to the head O(1)
+    - The DLL makes it easy to remove data from the tail O(1)
+Most recently used: Most recently read or most recently added to the cache.
+Least Recnely used: This will be discarded, the tail holds the least recently used item
+Adding entries to the cache:
+    - if the data exists
+        - Check the hash with the provided key to see if the key is a key in the hash
+        - Move the new entry to the head of the list
+    - if not
+        - If the hash is full, then we need to remove the tail (return del node)
+        - Delete the tail pointer from hash table (ref del node for this)
+        - create a new node in the list (return new node addr)
+        - create a KVP in the hash that points to the new node (use created node addr)
+    - finally
+        - create a new node in the DLL (return new node addr)
+        - Add Hash table entry that holds a pointer to the new DLL node (use created node addr)
+    - return the found / new item
+Get Item from the cache:
+    - Ref steps above ^^^^
+    - Return the node from setter fn (steps above)
+Remove Item from the cache:
+    - If the cache is overfull, delete the tail, return the removed node
+    - Remove the tail pointer from the hash table wher KVP value == removed node value
+"""
+
+
+
 class LRUCache:
     """
     Our LRUCache class keeps track of the max number of nodes it
@@ -24,10 +62,9 @@ class LRUCache:
     def get(self, key):
         if key in self.cache.keys():
             self.doublelist.move_to_front(self.cache[key])
-            return self.cache.value[key]
+            return self.cache[key].value[1]
         else:
             return None
-
 
     """
     Adds the given key-value pair to the cache. The newly-
@@ -40,15 +77,23 @@ class LRUCache:
     the newly-specified value.
     """
     def set(self, key, value):
-        # if key in cache, update it, and make it MRU
-        if key in self.cache:
-            self.cache[key].value = {key: value}
+         # if key in cache, update it, and make it MRU
+        if key in self.cache.keys():
+            # I changed this, you didn't have the .value so it was just setting the value of the cache at that key to be the array, instead of just changing
+            # the ListNode.value
+            self.cache[key].value = [key, value]
             self.doublelist.move_to_front(self.cache[key])
+            # just added a return
+            return self.cache[key]
+
         else:
+            # after moving this outside of the if statement, it's identical to what I have
+            self.cache[key] = self.doublelist.add_to_head([key, value])
+
             # if current_size exceeds limit delete LRU
             if self.current_size > self.limit:
                 old = self.doublelist.remove_from_tail()
-                for key in old:
-                    del self.cache[key]
-            self.doublelist.add_to_head({key: value})
+                del self.cache[old[0]]
+      
+        return self.cache[key]
 
