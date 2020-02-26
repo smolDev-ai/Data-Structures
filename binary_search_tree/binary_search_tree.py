@@ -24,8 +24,10 @@ class BinarySearchTree:
                 current_node = current_node.right
             elif value < current_node.value and current_node.left is None:
                 current_node.left = BinarySearchTree(value)
+                new_sub_tree = current_node.left
             elif value > current_node.value and current_node.right is None:
                 current_node.right = BinarySearchTree(value)
+                new_sub_tree = current_node.right
                 # where do I break the loop? Have I met all the cases? What am I missing?
 
     # Return True if the tree contains the value
