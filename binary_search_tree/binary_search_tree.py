@@ -18,15 +18,21 @@ class BinarySearchTree:
         current_node = self
         new_sub_tree = None
         while True:
+            # if current node is greater than or equal we want the value to go to the left
             if value < current_node.value and current_node.left is not None:
                 current_node = current_node.left
-            elif value > current_node.value and current_node.right is not None:
+            # if value is greater than or equal we want it to goto the right
+            elif value >= current_node.value and current_node.right is not None:
                 current_node = current_node.right
+            # if current node is greater than or equal value and there is no left
+            # sub_tree, create one
             elif value < current_node.value and current_node.left is None:
                 current_node.left = BinarySearchTree(value)
                 new_sub_tree = current_node.left
                 break
-            elif value > current_node.value and current_node.right is None:
+            # if value is greater than current node or equal and there is no right
+            # sub_tree, create one
+            elif value >= current_node.value and current_node.right is None:
                 current_node.right = BinarySearchTree(value)
                 new_sub_tree = current_node.right
                 break
@@ -56,15 +62,29 @@ class BinarySearchTree:
     # Return the maximum value found in the tree
     def get_max(self):
         # use the get max method from DLL in Queue and stack?
+        # why does this only work with self.right?
+        # answer from lecture: because the right tree is bigger than the root node.
         if self.right:
-            return self.right.get_max()
+            return self.right.get_max() # THIS IS RECURSIVE
         return self.value
 
     # Call the function `cb` on the value of each node
     # You may use a recursive or iterative approach
     def for_each(self, cb):
         # seems like recursion is necessary here.
-        pass
+        # what does this actually want?
+        # visit every node.
+        # call cb on all right and all left
+        # cb(self.value) --> root
+        # if self.left:
+        # self.left.for_each(cb)
+        # if self.right
+        # self.right.for_each(cb)
+        cb(self.value)
+        if self.left:
+            self.left.for_each(cb)
+        if self.right:
+            self.right.for_each(cb)
 
     # DAY 2 Project -----------------------
 
