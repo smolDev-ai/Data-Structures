@@ -12,7 +12,21 @@ class BinarySearchTree:
 
     # Insert the given value into the tree
     def insert(self, value):
-        pass
+        # plan:
+        # if value is less than current_node, move it to the left.
+        # If it's greater move it to the right.
+        current_node = self
+        new_sub_tree = None
+        while True:
+            if value < current_node.value and current_node.left is not None:
+                current_node = current_node.left
+            elif value > current_node.value and current_node.right is not None:
+                current_node = current_node.right
+            elif value < current_node.value and current_node.left is None:
+                current_node.left = BinarySearchTree(value)
+            elif value > current_node.value and current_node.right is None:
+                current_node.right = BinarySearchTree(value)
+                # where do I break the loop? Have I met all the cases? What am I missing?
 
     # Return True if the tree contains the value
     # False if it does not
