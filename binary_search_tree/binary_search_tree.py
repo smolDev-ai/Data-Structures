@@ -92,10 +92,8 @@ class BinarySearchTree:
     # Hint:  Use a recursive, depth first traversal
     def in_order_print(self, node=None):
         if self.left:
-            print(self.value)
             self.left.in_order_print()
         if self.right:
-            print(self.value)
             self.right.in_order_print()
 
 
@@ -155,10 +153,10 @@ class BinarySearchTree:
         pass
 
 
-new_tree = BinarySearchTree(5)
-new_tree.insert(10)
-new_tree.insert(4)
-new_tree.insert(1)
-new_tree.insert(9)
-new_tree.insert(80)
-new_tree.in_order_print(new_tree)
+# new_tree = BinarySearchTree(5)
+# new_tree.insert(10)
+# new_tree.insert(4)
+# new_tree.insert(1)
+# new_tree.insert(9)
+# new_tree.insert(80)
+# new_tree.in_order_print(new_tree)
