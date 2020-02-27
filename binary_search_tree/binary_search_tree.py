@@ -146,11 +146,21 @@ class BinarySearchTree:
 
     # Print Pre-order recursive DFT
     def pre_order_dft(self, node):
-        pass
+        print(self.value)
+        if self.left:
+            self.left.pre_order_dft(self.value)
+        if self.right:
+            self.right.pre_order_dft(self.value)
+
 
     # Print Post-order recursive DFT
     def post_order_dft(self, node):
-        pass
+        # preorder, but self.value is at the end?
+        if self.left:
+            self.left.post_order_dft(self.value)
+        if self.right:
+            self.right.post_order_dft(self.value)
+        print(self.value)
 
 
 # new_tree = BinarySearchTree(5)
